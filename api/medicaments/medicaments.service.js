@@ -6,7 +6,7 @@ class MedicamentsService {
 
   constructor(options) {
     this.medicaments = options.medicaments
-    this.nameIndex = new TextIndex('nom', {ref: 'cis'})
+    this.nameIndex = new TextIndex('denomination', {ref: 'cis'})
     const medicamentsAsArray = Object.keys(this.medicaments)
                                   .map((key) =>  this.medicaments[key])
     this.nameIndex.load(medicamentsAsArray)
