@@ -1,0 +1,15 @@
+[Unit]
+Description=Api médicaments
+
+[Service]
+ExecStart=/opt/api-medicaments/bin/update-and-run.sh
+Restart=always
+User=nobody
+# Note Debian/Ubuntu uses 'nogroup', RHEL/Fedora uses 'nobody'
+Group=nogroup
+Environment=PATH=/usr/bin:/usr/local/bin
+Environment=NODE_ENV=production
+WorkingDirectory=/opt/api-medicaments
+
+[Install]
+WantedBy=multi-user.target
