@@ -1,7 +1,7 @@
 {
   "mapping": {
     "cis":  { "position": 0 },
-    "nom": { "position": 1 },
+    "denomination": { "position": 1 },
     "formePharmaceutique":  { "position": 2 },
     "voiesAdmnistration" :  { "position": 3, "type": "array"},
     "statusAutorisation" :  { "position": 4 },
