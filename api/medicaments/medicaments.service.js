@@ -61,6 +61,10 @@ class MedicamentsService {
     this.compositionIndex = compositionIndex;
   }
 
+  getReturn(returnQuery) {
+    this.return = returnQuery === "cis" ? "cis" : "object";
+  }
+
   getByCis(cis) {
     const med = this.medicaments[cis];
     if (med) return Promise.resolve(med);
@@ -70,21 +74,30 @@ class MedicamentsService {
       );
   }
 
-  getByName(name) {
+  getByName(name, returnQuery) {
+    this.getReturn(returnQuery);
     const results = this.nameIndex.find(name).map((item) => {
       const result = clone(this.medicaments[item.ref]);
       result._score = item.score;
       return result;
     });
 
+    if (this.return === "cis")
+      return Promise.resolve(results.map((i) => i.cis));
     return Promise.resolve(results);
   }
 
-  getByCIP13(cip) {
-    return this.getByCis(this.cipIndex[cip]);
+  getByCIP13(cip, returnQuery) {
+    this.getReturn(returnQuery);
+
+    let result = this.cipIndex[cip];
+
+    if (this.return === "cis") return Promise.resolve(result);
+    return this.getByCis(result);
   }
 
-  getByCompo(composition) {
+  getByCompo(composition, returnQuery) {
+    this.getReturn(returnQuery);
     let compositionArray = castArray(composition);
 
     compositionArray = compositionArray.map((compoQuery) =>
@@ -100,6 +113,8 @@ class MedicamentsService {
       (cis) => this.medicaments[cis]
     );
 
+    if (this.return === "cis")
+      return Promise.resolve(intersection(...compositionArray));
     return Promise.resolve(results);
   }
 }

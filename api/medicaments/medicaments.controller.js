@@ -4,6 +4,7 @@ class MedicamentsController {
   constructor(options) {
     this.medicamentsService = new MedicamentsService(options);
   }
+
   get(req, res, next) {
     const cis = req.params.cis;
     this.medicamentsService
@@ -17,21 +18,21 @@ class MedicamentsController {
   getByQuery(req, res, next) {
     if (req.query.denomination) {
       this.medicamentsService
-        .getByName(req.query.denomination)
+        .getByName(req.query.denomination, req.query.return)
         .then((result) => {
           return res.json(result);
         })
         .catch(next);
     } else if (req.query.CIP13) {
       this.medicamentsService
-        .getByCIP13(req.query.CIP13)
+        .getByCIP13(req.query.CIP13, req.query.return)
         .then((result) => {
           return res.json(result);
         })
         .catch(next);
     } else if (req.query.composition) {
       this.medicamentsService
-        .getByCompo(req.query.composition)
+        .getByCompo(req.query.composition, req.query.return)
         .then((result) => {
           return res.json(result);
         })
