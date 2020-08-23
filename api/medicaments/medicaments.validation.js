@@ -1,15 +1,18 @@
-const StandardError = require('standard-error')
-
+const StandardError = require("standard-error");
 
 const medicamentsValidation = {
-  getByQuery
-}
+  getByQuery,
+};
 
-function getByQuery(req,res,next){
-  if ((!req.query.denomination) && (!req.query.CIP13)){
-    return next(new StandardError("un des paramètres nom ou CIP13 est requis", { code: 400 }))
+function getByQuery(req, res, next) {
+  if (!req.query.denomination && !req.query.CIP13 && !req.query.composition) {
+    return next(
+      new StandardError("un des paramètres nom ou CIP13 est requis", {
+        code: 400,
+      })
+    );
   }
-  next()
+  next();
 }
 
-module.exports = medicamentsValidation
+module.exports = medicamentsValidation;
