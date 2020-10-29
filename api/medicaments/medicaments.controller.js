@@ -20,6 +20,12 @@ class MedicamentsController {
       this.medicamentsService
         .getByName(req.query.denomination, req.query.return)
         .then((result) => {
+          if (req.query.limit) {
+            return result.slice(0, Number(req.query.limit));
+          }
+          return result;
+        })
+        .then((result) => {
           return res.json(result);
         })
         .catch(next);
@@ -27,12 +33,24 @@ class MedicamentsController {
       this.medicamentsService
         .getByCIP13(req.query.CIP13, req.query.return)
         .then((result) => {
+          if (req.query.limit) {
+            return result.slice(0, Number(req.query.limit));
+          }
+          return result;
+        })
+        .then((result) => {
           return res.json(result);
         })
         .catch(next);
     } else if (req.query.composition) {
       this.medicamentsService
         .getByCompo(req.query.composition, req.query.return)
+        .then((result) => {
+          if (req.query.limit) {
+            return result.slice(0, Number(req.query.limit));
+          }
+          return result;
+        })
         .then((result) => {
           return res.json(result);
         })
